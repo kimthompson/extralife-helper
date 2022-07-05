@@ -20,9 +20,12 @@ const LIGHT_BLUE = "#28C0E8";
 const GREEN = "#97C93D";
 const WHITE = "#FFFFFF";
 const GRAY = "#BCBEC0";
+const SONIC_BLUE = "#1A50BC";
+const SONIC_RED = "#FF0000";
+const SONIC_YELLOW = "#FFCF00";
 const CLOCK_TIMER_INTERVAL = 1000;      // Frequency that the countdown should be refreshed, in ms
 const ACTION_TIMER_INTERVAL = 60000;    // Frequency that a new action should be taken, in ms
-const DONOR_TIMER_INTERVAL = 60000;     // Length of time a new donation is shown, in ms
+const DONOR_TIMER_INTERVAL = 10000;     // Length of time a new donation is shown, in ms
 const LOGO_PLAY_MARK = 60;              // Number of times the action item ticks before showing logos
 const DONOR_AMOUNT_POINT_Y = 40;
 const DONOR_AMOUNT_FONT_SIZE = 36;
@@ -46,7 +49,7 @@ const DONOR_INFO_URL = BASE_URL + "participants/{1}/donations";
 const TEAM_INFO_URL = BASE_URL + "teams/{1}";
 const TEAM_ROSTER_URL = BASE_URL + "teams/{1}/participants";
 const TEAM_DONOR_INFO_URL = BASE_URL + "teams/{1}/donations";
-const THEMES = ["blue1", "blue2", "gray1", "white1"];
+const THEMES = ["blue1", "blue2", "gray1", "white1", "sonic"];
 const BORDERS = ["none", "rounded", "square"];
 const VOICES = ["US-male", "US-female", "UK-male", "UK-female", "FR-male", "FR-female", "ES-male", "ES-female"];
 const ITEMS_TO_LOAD = 5;
@@ -477,12 +480,15 @@ function initScreen() {
     // and the total amount raised by the participant.
 
     var centerX = backgroundRect.point.x + backgroundRect.size.width / 2;
-    var centerY = backgroundRect.point.y + backgroundRect.size.height / 2;
+    var centerY = backgroundRect.point.y + backgroundRect.size.height / 2; 
+
+    // If theme is "sonic", use our custom font(s) instead
+    var titleFontFamily = helperTheme == "sonic" ? "NiseSegaSonic" : "en-us" ? "Furore" : "SourceSansPro-Bold";
 
     titleText = new paper.PointText({
         point: [centerX, 20],
         content: showYearMode === true ? strings["TEXT_EXTRA_LIFE"] : strings["TEXT_DAYS_UNTIL"],
-        fontFamily: lang == "en-us" ? "Furore" : "SourceSansPro-Bold",
+        fontFamily: titleFontFamily,
         fontSize: 12,
         justification: 'center'
     });
@@ -536,7 +542,7 @@ function initScreen() {
     raisedText = new paper.PointText({
         point: [centerX, 78],
         content: participantId ? strings["TEXT_MY_AMOUNT_RAISED"] : strings["TEXT_OUR_AMOUNT_RAISED"],
-        fontFamily: lang == "en-us" ? "Furore" : "SourceSansPro-Bold",
+        fontFamily: titleFontFamily,
         fontSize: 12,
         justification: 'center'
     });
@@ -571,7 +577,7 @@ function initScreen() {
     donorNameText = new paper.PointText({
         point: [centerX, DONOR_NAME_POINT_Y],
         content: strings["TEXT_ANONYMOUS"],
-        fontFamily: lang == "en-us" ? "Furore" : "SourceSansPro-Bold",
+        fontFamily: titleFontFamily,
         fontSize: DONOR_NAME_FONT_SIZE,
         justification: 'center'
     });
@@ -634,6 +640,7 @@ function initScreen() {
             donorMessageText1.fillColor = WHITE;
             donorMessageText2.fillColor = WHITE;
             logoGroup.fillColor = WHITE;
+
             break;
         case "blue2":
             backgroundPath.strokeColor = DARK_BLUE;
@@ -661,6 +668,20 @@ function initScreen() {
             donorNameText.fillColor = DARK_BLUE;
             donorMessageText1.fillColor = DARK_BLUE;
             donorMessageText2.fillColor = DARK_BLUE;
+            logoGroup.fillColor = WHITE;
+            break;
+        case "sonic":
+            backgroundPath.strokeColor = SONIC_YELLOW;
+            backgroundPath.fillColor = SONIC_BLUE;
+            titleText.fillColor = WHITE;
+            daysText.fillColor = SONIC_RED;
+            clockGroup.fillColor = SONIC_RED;
+            raisedText.fillColor = WHITE;
+            moneyText.fillColor = SONIC_YELLOW;
+            donorAmountText.fillColor = SONIC_YELLOW;
+            donorNameText.fillColor = WHITE;
+            donorMessageText1.fillColor = WHITE;
+            donorMessageText2.fillColor = WHITE;
             logoGroup.fillColor = WHITE;
             break;
         default: // white1

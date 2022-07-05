@@ -20,12 +20,13 @@
         //                                     // main screen and not also your goal.
         showYearMode = false;                  // An alternate display to support fundraising all
         //                                     // year. The count down/up timer is hidden.        
-        donationSounds = "cash.mp3,kids.mp3";  // Set this to your custom set of sounds, separated
+        donationSounds = "sonic_ring.mp3";  // Set this to your custom set of sounds, separated
         //                                     // by commas. Or set to "" to play no sounds.
-        donationMessageVoice = "US-female";    // Set to US-male, US-female, UK-male, UK-female,
+        donationMessageVoice = "";    // Set to US-male, US-female, UK-male, UK-female,
         //                                     // FR-male, FR-female, ES-male, ES-female or set
         //                                     // to "" to not read messages with text-to-speech.          
         testDonationSeconds = 0;               // Number of seconds to show a test donation after
+        //                                     // doesn't work, have to set the constant in the helper.js file
         //                                     // the Helper loads. Set to 0 to disable.
         volume = 100;                          // The volume for all sound effects and text-to-speech.
         lang = "en-us";                        // Language to use for all text displayed in the
@@ -36,9 +37,12 @@
 
         // If you would like additional things to happen when a new donation is 
         // received, put them in this function.
-        function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn)
-        {
-            // Your custom logic here.
+        function onNewDonation(donorName, donationAmount, message, avatarImageURL, createdOn) {
+            console.log("donorName", donorName);
+            console.log("donationAmount", donationAmount);
+            console.log("message", message);
+            console.log("avatarImageURL", avatarImageURL);
+            console.log("createdOn", createdOn);
         }
     </script>
     <style>
@@ -61,6 +65,10 @@
         @font-face {
             font-family: "Cantarell-Bold";
             src: url("fonts/Cantarell-Bold.ttf") format("opentype");
+        }
+        @font-face {
+            font-family: "NiseSegaSonic";
+            src: url("fonts/NiseSegaSonic.TTF") format("opentype")
         }
         .error {
             width: 500px;
